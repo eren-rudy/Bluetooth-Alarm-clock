@@ -46,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
                 String deviceName = device.getName();
                 String deviceHardwareAddress = device.getAddress(); // MAC address
 
-
                 if (deviceName.equals(deviceToFind)) {
                     isAMatchingDevice = true;
                     toast.show();
@@ -87,7 +86,8 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d("Eren-onCreate", "Found arduino module: " + arduinoModule + "\n");
         Log.d("Eren-onCreate", "Device name: " + arduinoModule.getName());
-        Log.d("Eren-onCreate", "UUID of remote device: " + uuid[0].getUuid());
+//        Log.d("Eren-onCreate", "UUID of remote device: " + uuid[0].getUuid());
+        Log.d("Eren-onCreate", "UUIDs: " + uuid);
         Log.d("Eren-onCreate", "Bluetooth Class: " + arduinoModule.getBluetoothClass());
         Log.d("Eren-onCreate", "Device bond state: " + arduinoModule.getBondState());
         Log.d("Eren-onCreate", "");
@@ -98,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
 //        debug.append("Created connection thread: " + newThread.toString());
         Log.d("Eren-onCreate", "Starting ConnectThread.run");
         newThread.run();
+
 
     }
 

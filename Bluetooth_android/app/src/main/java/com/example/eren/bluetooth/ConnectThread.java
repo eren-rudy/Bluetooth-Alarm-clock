@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.util.Log;
 
+
 import java.io.IOException;
 import java.util.UUID;
 
@@ -18,6 +19,7 @@ public class ConnectThread extends Thread {
     BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     private UUID DEVICE_UUID = null;
     private String NAME = "connectionName";
+    private byte[] testBytes = {1,0,1};
 
 
     public ConnectThread(BluetoothDevice device) {
@@ -25,7 +27,8 @@ public class ConnectThread extends Thread {
         // because mmSocket is final.
         BluetoothSocket tmp = null;
         mmDevice = device;
-        DEVICE_UUID = mmDevice.getUuids()[0].getUuid();
+//        DEVICE_UUID = mmDevice.getUuids()[0].getUuid();
+        DEVICE_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
 
         try {
             // Get a BluetoothSocket to connect with the given BluetoothDevice.
@@ -69,6 +72,8 @@ public class ConnectThread extends Thread {
 
     public void manageMyConnectedSocket(BluetoothSocket socket) {
         Log.d("Eren-ManageSocket", "Managing socket..." + socket.toString());
+//        ConnectedThread connection = new ConnectedThread(socket);
+//        connection.write(testBytes);
 
     }
 
