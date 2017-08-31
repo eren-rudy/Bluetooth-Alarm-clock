@@ -1,5 +1,6 @@
 package com.example.eren.bluetooth;
 
+import android.os.ParcelUuid;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 //import android.widget.Button;
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         BluetoothDevice matchingDevice = null;
 
         Context context = getApplicationContext(); //for Toast
-        Toast toast = Toast.makeText(context,"Found Arduino Module", toastDuration);
+        Toast toast = Toast.makeText(context,"Found Arduino Module in Paired Devices", toastDuration);
 
         if (pairedDevices.size() > 0) {
             // There are paired devices. Get the name and address of each paired device.
@@ -76,26 +77,27 @@ public class MainActivity extends AppCompatActivity {
         BluetoothDevice arduinoModule;
 
 
-
-
-
         if (!mBluetoothAdapter.isEnabled()) { //if bluetooth isn't enabled, enable it
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableBtIntent, 1);
         }
 
         arduinoModule = queryDevices(arduinoModuleName, mBluetoothAdapter); //set arduinoModule device to device with name "HC-06"
+        ParcelUuid [] uuid = arduinoModule.getUuids();
 
+        Log.d("Eren-onCreate", "Found arduino module: " + arduinoModule + "\n");
+        Log.d("Eren-onCreate", "Device name: " + arduinoModule.getName());
+        Log.d("Eren-onCreate", "UUID of remote device: " + uuid[0].getUuid());
+        Log.d("Eren-onCreate", "Bluetooth Class: " + arduinoModule.getBluetoothClass());
+        Log.d("Eren-onCreate", "Device bond state: " + arduinoModule.getBondState());
+        Log.d("Eren-onCreate", "");
 
-        debug.setText("Found arduino module: " + arduinoModule.getName() + "\n");
-//        Log.d(arduinoModule.getUuids());
-
-        Log.d("TAG", "Creating new Connection thread");
-
+        Log.d("Eren-onCreate", "Creating new Connection thread");
         ConnectThread newThread = new ConnectThread(arduinoModule);
-        debug.append("Created connection thread: " + newThread.toString());
 
-
+//        debug.append("Created connection thread: " + newThread.toString());
+        Log.d("Eren-onCreate", "Starting ConnectThread.run");
+        newThread.run();
 
     }
 

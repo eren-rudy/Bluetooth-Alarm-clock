@@ -16,9 +16,9 @@ public class ConnectThread extends Thread {
     private final BluetoothSocket mmSocket;
     private final BluetoothDevice mmDevice;
     BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-    private UUID MY_UUID = UUID.fromString("e432682a-8c81-11e7-bb31-be2e44b06b34");
+    private UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
     private String NAME = "connectionName";
-    private String TAG = "TAG";
+
 
     public ConnectThread(BluetoothDevice device) {
         // Use a temporary object that is later assigned to mmSocket
@@ -29,28 +29,34 @@ public class ConnectThread extends Thread {
         try {
             // Get a BluetoothSocket to connect with the given BluetoothDevice.
             // MY_UUID is the app's UUID string, also used in the server code.
-            tmp = device.createRfcommSocketToServiceRecord(MY_UUID);
+            tmp = device.createInsecureRfcommSocketToServiceRecord(MY_UUID);
         } catch (IOException e) {
-            Log.e(TAG, "Socket's create() method failed", e);
+            Log.e("Eren-ConnectThread", "Socket's create() method failed", e);
         }
         mmSocket = tmp;
-        Log.d(TAG, "Creating temporary socket");
+        Log.d("Eren-ConnectThread", "Creating temporary socket");
     }
 
     public void run() {
         // Cancel discovery because it otherwise slows down the connection.
-        mBluetoothAdapter.cancelDiscovery();
+        if(mBluetoothAdapter.isDiscovering()) {
+            mBluetoothAdapter.cancelDiscovery();
+        }
 
         try {
             // Connect to the remote device through the socket. This call blocks
             // until it succeeds or throws an exception.
             mmSocket.connect();
+
         } catch (IOException connectException) {
             // Unable to connect; close the socket and return.
+            Log.d("Eren-ConnectThreadRun", "Is connected? " + mmSocket.isConnected());
             try {
+                Log.d("Eren-ConnectThreadRun", "Closing the client socket");
                 mmSocket.close();
             } catch (IOException closeException) {
-                Log.e(TAG, "Could not close the client socket", closeException);
+                Log.d("Eren-ConnectThreadRun", "Could not close the client socket");
+                Log.e("Eren-ConnectThreadRun", "Could not close the client socket", closeException);
             }
             return;
         }
@@ -61,16 +67,17 @@ public class ConnectThread extends Thread {
     }
 
     public void manageMyConnectedSocket(BluetoothSocket socket) {
-        Log.d(TAG, "Managing socket..." + socket.toString());
+        Log.d("Eren-ManageSocket", "Managing socket..." + socket.toString());
 
     }
 
     // Closes the client socket and causes the thread to finish.
     public void cancel() {
         try {
+            Log.d("ConnectThreadCancel", "Closing the client socket");
             mmSocket.close();
         } catch (IOException e) {
-            Log.e(TAG, "Could not close the client socket", e);
+            Log.e("ConnectThreadCancel", "Could not close the client socket", e);
         }
     }
 }
