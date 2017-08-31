@@ -16,7 +16,7 @@ public class ConnectThread extends Thread {
     private final BluetoothSocket mmSocket;
     private final BluetoothDevice mmDevice;
     BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-    private UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
+    private UUID DEVICE_UUID = null;
     private String NAME = "connectionName";
 
 
@@ -25,11 +25,12 @@ public class ConnectThread extends Thread {
         // because mmSocket is final.
         BluetoothSocket tmp = null;
         mmDevice = device;
+        DEVICE_UUID = mmDevice.getUuids()[0].getUuid();
 
         try {
             // Get a BluetoothSocket to connect with the given BluetoothDevice.
             // MY_UUID is the app's UUID string, also used in the server code.
-            tmp = device.createInsecureRfcommSocketToServiceRecord(MY_UUID);
+            tmp = device.createInsecureRfcommSocketToServiceRecord(DEVICE_UUID);
         } catch (IOException e) {
             Log.e("Eren-ConnectThread", "Socket's create() method failed", e);
         }

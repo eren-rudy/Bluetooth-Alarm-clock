@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 //    private BluetoothAdapter myBluetooth = null;
 
     public static final java.lang.String arduinoModuleName = "HC-06";
-    private int toastDuration = Toast.LENGTH_SHORT;
+    private int toastDuration = Toast.LENGTH_LONG;
 
     public BluetoothDevice queryDevices(java.lang.String deviceToFind, BluetoothAdapter btAdapter){
         Set<BluetoothDevice> pairedDevices = btAdapter.getBondedDevices();
