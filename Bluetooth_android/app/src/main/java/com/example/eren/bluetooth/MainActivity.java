@@ -3,7 +3,8 @@ package com.example.eren.bluetooth;
 import android.os.ParcelUuid;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-//import android.widget.Button;
+import android.view.View;
+import android.widget.Button;
 import java.util.Set;
 //import java.util.ArrayList;
 import android.widget.Toast;
@@ -24,8 +25,7 @@ import android.nfc.Tag;
 
 public class MainActivity extends AppCompatActivity {
 
-//    Button btn = (Button)findViewById(R.id.button);
-//    private BluetoothAdapter myBluetooth = null;
+
 
     public static final java.lang.String arduinoModuleName = "HC-06";
     private int toastDuration = Toast.LENGTH_LONG;
@@ -69,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        TextView debug = (TextView)findViewById(R.id.text_box1);
 
 
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -93,11 +92,18 @@ public class MainActivity extends AppCompatActivity {
         Log.d("Eren-onCreate", "");
 
         Log.d("Eren-onCreate", "Creating new Connection thread");
-        ConnectThread newThread = new ConnectThread(arduinoModule);
+        final ConnectThread newThread = new ConnectThread(arduinoModule);
 
 //        debug.append("Created connection thread: " + newThread.toString());
-        Log.d("Eren-onCreate", "Starting ConnectThread.run");
-        newThread.run();
+//        Log.d("Eren-onCreate", "Starting ConnectThread.run");
+
+        final Button btn = (Button)findViewById(R.id.btn1);
+        btn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                newThread.run();
+            }
+        });
+
 
 
     }
