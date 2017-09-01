@@ -19,7 +19,6 @@ public class ConnectThread extends Thread {
     BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     private UUID DEVICE_UUID = null;
     private String NAME = "connectionName";
-    private byte[] testBytes = {1,0,1};
 
 
     public ConnectThread(BluetoothDevice device) {
@@ -67,14 +66,15 @@ public class ConnectThread extends Thread {
 
         // The connection attempt succeeded. Perform work associated with
         // the connection in a separate thread.
-        manageMyConnectedSocket(mmSocket);
+
     }
 
-    public void manageMyConnectedSocket(BluetoothSocket socket) {
-        Log.d("Eren-ManageSocket", "Managing socket..." + socket.toString());
-        ConnectedThread connection = new ConnectedThread(socket);
+    public ConnectedThread getConnection() {
+        Log.d("Eren-getConnection", "Getting connected thread..." + mmSocket.toString());
+        ConnectedThread connection = new ConnectedThread(mmSocket);
 //        connection.run();
-        connection.write(testBytes);
+        return connection;
+
 
     }
 

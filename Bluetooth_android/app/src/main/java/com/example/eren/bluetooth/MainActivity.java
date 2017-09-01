@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
 
                 if (deviceName.equals(deviceToFind)) {
                     isAMatchingDevice = true;
-                    toast.show();
                     matchingDevice = device;
                 }
             }
@@ -73,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         BluetoothDevice arduinoModule;
-
+        final byte[] testBytes = {1,0,1};
 
         if (!mBluetoothAdapter.isEnabled()) { //if bluetooth isn't enabled, enable it
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
@@ -91,16 +90,22 @@ public class MainActivity extends AppCompatActivity {
         Log.d("Eren-onCreate", "Device bond state: " + arduinoModule.getBondState());
         Log.d("Eren-onCreate", "");
 
-        Log.d("Eren-onCreate", "Creating new Connection thread");
+        Log.d("Eren-onCreate", "Creating new socket to connect");
         final ConnectThread newThread = new ConnectThread(arduinoModule);
+        Log.d("Eren-onCreate", "Connecting Socket");
+        newThread.run();
+        final ConnectedThread btThread = newThread.getConnection();
 
-//        debug.append("Created connection thread: " + newThread.toString());
-//        Log.d("Eren-onCreate", "Starting ConnectThread.run");
+        Context context = getApplicationContext(); //for Toast
+        Toast toast = Toast.makeText(context,"Connected to Bluetooth Module...", toastDuration);
+        toast.show();
+
+        //Button control to manipulate thread connection
 
         final Button btn = (Button)findViewById(R.id.btn1);
         btn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                newThread.run();
+                btThread.write(testBytes);
             }
         });
 
