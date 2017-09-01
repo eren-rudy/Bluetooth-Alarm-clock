@@ -72,8 +72,9 @@ public class ConnectThread extends Thread {
 
     public void manageMyConnectedSocket(BluetoothSocket socket) {
         Log.d("Eren-ManageSocket", "Managing socket..." + socket.toString());
-//        ConnectedThread connection = new ConnectedThread(socket);
-//        connection.write(testBytes);
+        ConnectedThread connection = new ConnectedThread(socket);
+//        connection.run();
+        connection.write(testBytes);
 
     }
 
