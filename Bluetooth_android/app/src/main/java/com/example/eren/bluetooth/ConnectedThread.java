@@ -86,7 +86,7 @@ public class ConnectedThread extends Thread {
             mmOutStream.write(bytes);
 
             // Share the sent message with the UI activity.
-            Log.d(TAG, "Sent message to outstream: " + bytes[0] + "," + bytes[1] + "," + bytes[2]);
+            Log.d(TAG, "Sent byte to outstream: " + bytes[0]);
 //            Message writtenMsg = mHandler.obtainMessage(
 //                    MessageConstants.MESSAGE_WRITE, -1, -1, mmBuffer);
 //            writtenMsg.sendToTarget();

@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         BluetoothDevice arduinoModule;
-        final byte[] testBytes = {1,0,1};
+        final byte[] testBytes = {6};
 
         if (!mBluetoothAdapter.isEnabled()) { //if bluetooth isn't enabled, enable it
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
